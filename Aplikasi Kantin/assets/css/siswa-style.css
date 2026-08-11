@@ -1,0 +1,1052 @@
+/* =========================================================
+   STYLE DASHBOARD SISWA - E-KANTIN SEKOLAH
+   Dipakai bareng di: dashboard.php, keranjang.php, riwayat.php
+   Versi disesuaikan dengan tema referensi (rounded card, shadow lembut)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --hijau-tua: #0b3d2c;
+  --hijau-muda: #0f7a4f;
+  --hijau-terang: #14a86a;
+  --emas: #d8ae4c;
+  --krem: #f6f7f5;
+  --abu-teks: #6b776f;
+  --merah: #c0392b;
+  --border-halus: #ececea;
+
+  --radius-besar: 20px;
+  --radius-sedang: 14px;
+  --shadow-lembut: 0 6px 20px rgba(11, 61, 44, 0.07);
+  --shadow-lembut-hover: 0 14px 28px rgba(11, 61, 44, 0.14);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--krem);
+  color: #1f2924;
+}
+
+a {
+  color: var(--hijau-muda);
+  text-decoration: none;
+}
+
+/* ---------- Navbar (dipakai lewat include navbar.php) ---------- */
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* kiri - tengah - kanan */
+  align-items: center;
+  gap: 12px;
+  background-color: var(--hijau-tua);
+  background-image: linear-gradient(135deg, #0b3d2c 0%, #0e5238 100%);
+  padding: 16px 25px;
+  border-radius: 0 0 22px 22px;
+  box-shadow: 0 8px 24px rgba(11, 61, 44, 0.18);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 3px;
+}
+
+.navbar-brand span {
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+
+/* menu navbar diposisikan di tengah pakai grid kolom "auto" di atas */
+.navbar-menu {
+  display: flex;
+  gap: 4px;
+  justify-self: center;
+  background-color: rgba(255, 255, 255, 0.06);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.navbar-menu a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* menu yang lagi aktif dikasih warna emas biar jelas siswa ada di halaman mana */
+.navbar-menu a.aktif {
+  background-color: var(--emas);
+  color: var(--hijau-tua);
+  font-weight: 700;
+}
+
+.navbar-badge {
+  display: inline-block;
+  background-color: var(--merah);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-self: end;
+}
+
+.navbar-nama {
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.navbar-logout {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.navbar-logout:hover {
+  background-color: var(--merah);
+}
+
+/* navbar ditumpuk ke bawah kalau layar sempit, biar tidak berdesakan */
+@media (max-width: 700px) {
+  .navbar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    border-radius: 0 0 18px 18px;
+  }
+
+  .navbar-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* ---------- Judul halaman di dalam konten ---------- */
+.halaman-judul {
+  color: var(--hijau-tua);
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.halaman-subjudul {
+  color: var(--abu-teks);
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+/* ---------- Isi halaman ---------- */
+.container {
+  max-width: 1080px;
+  margin: 25px auto;
+  padding: 0 20px;
+}
+
+.kotak {
+  background-color: #fff;
+  border: 1px solid var(--border-halus);
+  border-radius: var(--radius-besar);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-lembut);
+}
+
+.kotak h3 {
+  color: var(--hijau-tua);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* ---------- Form pencarian ---------- */
+.form-cari {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form-cari input[type="text"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 11px 14px;
+  border: 1px solid var(--border-halus);
+  background-color: var(--krem);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.15s ease;
+}
+
+.form-cari input[type="text"]:focus {
+  outline: none;
+  border-color: var(--hijau-muda);
+  background-color: #fff;
+}
+
+.form-cari button {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--hijau-tua);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.form-cari button:hover {
+  background-color: var(--hijau-muda);
+}
+
+/* ---------- Chip pilihan kantin ---------- */
+.kantin-chip {
+  display: inline-block;
+  padding: 9px 16px;
+  margin: 0 8px 8px 0;
+  border-radius: 999px;
+  background-color: var(--krem);
+  border: 1px solid var(--border-halus);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--hijau-tua);
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.kantin-chip:hover {
+  background-color: var(--hijau-tua);
+  border-color: var(--hijau-tua);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* kantin yang lagi difilter/dipilih dikasih tanda jelas */
+.kantin-chip.aktif {
+  background-color: var(--hijau-tua);
+  border-color: var(--hijau-tua);
+  color: #fff;
+}
+
+/* ---------- Baris "Urutkan:" di kotak pencarian ---------- */
+.urutan-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.urutan-label {
+  font-size: 13px;
+  color: var(--abu-teks);
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+/* ---------- Tab filter (dipakai di riwayat.php status, & urutan dashboard) ---------- */
+.filter-tab-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filter-tab {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-halus);
+  background-color: #fff;
+  color: var(--abu-teks);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-tab:hover {
+  border-color: var(--hijau-muda);
+  color: var(--hijau-tua);
+}
+
+.filter-tab.aktif {
+  background-color: var(--hijau-tua);
+  border-color: var(--hijau-tua);
+  color: #fff;
+}
+
+/* ---------- Tabel ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+thead {
+  background-color: var(--hijau-tua);
+  color: #fff;
+}
+
+thead th:first-child { border-radius: 10px 0 0 10px; }
+thead th:last-child { border-radius: 0 10px 10px 0; }
+
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-halus);
+}
+
+tbody tr:hover {
+  background-color: #f7faf8;
+}
+
+/* biar tabel bisa digeser saat layar sempit, tanpa merusak layout */
+.tabel-geser {
+  overflow-x: auto;
+}
+
+/* ---------- Grid kartu menu (tampilan seperti etalase kantin) ---------- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.menu-card {
+  background-color: #fff;
+  border: 1px solid var(--border-halus);
+  border-radius: var(--radius-besar);
+  overflow: hidden;
+  box-shadow: var(--shadow-lembut);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: muncul 0.4s ease both;
+}
+
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lembut-hover);
+}
+
+.menu-card:nth-child(1) { animation-delay: 0.05s; }
+.menu-card:nth-child(2) { animation-delay: 0.1s; }
+.menu-card:nth-child(3) { animation-delay: 0.15s; }
+.menu-card:nth-child(4) { animation-delay: 0.2s; }
+.menu-card:nth-child(5) { animation-delay: 0.25s; }
+.menu-card:nth-child(6) { animation-delay: 0.3s; }
+.menu-card:nth-child(n+7) { animation-delay: 0.35s; }
+
+@keyframes muncul {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* foto menu */
+.menu-img {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background-color: var(--krem);
+}
+
+.menu-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.menu-card:hover .menu-img img {
+  transform: scale(1.08);
+}
+
+.menu-img-kosong {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #c7cdc9;
+  background-color: var(--krem);
+}
+
+.menu-info {
+  padding: 16px;
+}
+
+.menu-kantin {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--emas);
+  background-color: var(--hijau-tua);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.menu-info h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2924;
+  margin-bottom: 4px;
+}
+
+.menu-harga {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--hijau-muda);
+  margin-bottom: 2px;
+}
+
+.menu-stok {
+  font-size: 12px;
+  color: var(--abu-teks);
+  margin-bottom: 12px;
+}
+
+.menu-info form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- Foto kecil (dipakai di tabel keranjang & daftar riwayat) ---------- */
+.menu-thumb-kecil {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.menu-thumb-kosong-kecil {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: var(--krem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #c7cdc9;
+}
+
+.detail-pesanan {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-pesanan li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+/* ---------- Kontrol jumlah pesan (tombol - dan +) ---------- */
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--krem);
+  border-radius: 999px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.qty-control button,
+.qty-control .btn-qty {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #fff;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--hijau-tua);
+  text-decoration: none;
+}
+
+.qty-control button:hover,
+.qty-control .btn-qty:hover {
+  background-color: var(--hijau-tua);
+  color: #fff;
+}
+
+.qty-control .qty-angka {
+  width: 26px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.qty-control input {
+  width: 40px;
+  text-align: center;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ---------- Tombol umum ---------- */
+.btn {
+  display: inline-block;
+  padding: 9px 18px;
+  border: 1px solid var(--border-halus);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #fff;
+  color: var(--hijau-tua);
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.btn:hover {
+  background-color: var(--krem);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-hijau {
+  background-color: var(--hijau-tua);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(11, 61, 44, 0.25);
+}
+
+.btn-hijau:hover {
+  background-color: var(--hijau-muda);
+}
+
+.btn-hapus {
+  color: var(--merah);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- Badge status pesanan ---------- */
+.badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.badge.diproses {
+  background-color: #fdecd8;
+  color: #b3641f;
+}
+
+.badge.selesai {
+  background-color: #d9f2e3;
+  color: var(--hijau-muda);
+}
+
+.badge.dibatalkan {
+  background-color: #f8dcd8;
+  color: var(--merah);
+}
+
+/* ---------- Nomor antrean besar di riwayat ---------- */
+.nomor-antrean {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--hijau-muda);
+}
+
+/* ---------- Kotak QRIS di halaman keranjang ---------- */
+.kotak-qris {
+  max-width: 300px;
+  background-color: var(--krem);
+  border: 1px solid var(--border-halus);
+  border-radius: var(--radius-sedang);
+  padding: 20px;
+  text-align: center;
+}
+
+.kotak-qris h4 {
+  color: var(--hijau-tua);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.kotak-qris img {
+  width: 100%;
+  max-width: 200px;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+.total-bayar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 15px;
+  color: var(--hijau-tua);
+  background-color: #eefaf3;
+  border: 1px solid #d3ecdd;
+  border-radius: var(--radius-sedang);
+  padding: 16px 20px;
+  margin: 0 0 15px 0;
+}
+
+.total-bayar small {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--abu-teks);
+  margin-top: 2px;
+}
+
+.total-bayar strong {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* tombol nonaktif saat belum ada item dicentang */
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover {
+  background-color: var(--hijau-tua);
+}
+
+/* checkbox di kolom pertama tabel keranjang */
+th:first-child,
+td:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+/* ---------- Modal popup pilihan metode pembayaran ---------- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 61, 44, 0.45);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-overlay.aktif {
+  display: flex;
+}
+
+.modal-box {
+  position: relative;
+  background-color: #fff;
+  border-radius: var(--radius-besar);
+  padding: 26px 26px 22px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  animation: muncul 0.2s ease both;
+}
+
+.modal-box h3 {
+  color: var(--hijau-tua);
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--abu-teks);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--merah);
+}
+
+/* ---------- Checkbox pilih item di keranjang ---------- */
+input.cek-item,
+#pilih-semua {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--hijau-tua);
+}
+
+/* ---------- Kartu pilihan metode pembayaran ---------- */
+.metode-pilihan {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.metode-pilihan label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 2px solid var(--border-halus);
+  border-radius: var(--radius-sedang);
+  cursor: pointer;
+  font-size: 14px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.metode-pilihan label:hover {
+  border-color: var(--emas);
+}
+
+.metode-pilihan input[type="radio"] {
+  accent-color: var(--hijau-tua);
+}
+
+.metode-pilihan input[type="radio"]:checked + span {
+  font-weight: 700;
+  color: var(--hijau-tua);
+}
+
+.metode-pilihan label:has(input:checked) {
+  border-color: var(--hijau-tua);
+  background-color: #eefaf3;
+}
+
+/* ---------- Struk / Bukti Pembayaran ---------- */
+.struk-area {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.struk {
+  font-family: 'Poppins', sans-serif;
+}
+
+.struk-kop {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.struk-kop img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 6px;
+}
+
+.struk-kop h3 {
+  color: var(--hijau-tua);
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.struk-kop p {
+  font-size: 12px;
+  color: var(--abu-teks);
+}
+
+.struk-garis {
+  border-top: 1px dashed #ccc;
+  margin: 12px 0;
+}
+
+.struk-info td,
+.struk-item td,
+.struk-total td {
+  padding: 3px 0;
+  font-size: 13px;
+  border: none;
+}
+
+.struk-item td:last-child,
+.struk-total td:last-child {
+  text-align: right;
+}
+
+.struk-total {
+  width: 100%;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.struk-status {
+  text-align: center;
+  background-color: #d9f2e3;
+  color: var(--hijau-muda);
+  font-weight: 700;
+  padding: 10px;
+  border-radius: 999px;
+  margin: 14px 0;
+}
+
+.struk-footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--abu-teks);
+}
+
+.struk-aksi {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* saat halaman di-print / disimpan jadi PDF, sembunyikan bagian yang tidak perlu */
+@media print {
+  .navbar,
+  .struk-aksi {
+    display: none;
+  }
+
+  body {
+    background-color: #fff;
+  }
+
+  .kotak {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* ---------- Tampilan HP ---------- */
+@media (max-width: 600px) {
+  .topbar-menu a {
+    margin-bottom: 6px;
+  }
+
+  .kotak {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  th, td {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+}
+
+/* ---------- Toast notifikasi (pengganti alert bawaan) ---------- */
+#toast-container {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  border-left: 4px solid var(--hijau-muda);
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  font-size: 13.5px;
+  color: #1f2924;
+  min-width: 220px;
+  max-width: 320px;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.tampil {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.keluar {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.toast-error { border-left-color: var(--merah); }
+.toast-info { border-left-color: var(--emas); }
+.toast-ikon { font-size: 16px; }
+
+/* ---------- Modal konfirmasi custom (pengganti confirm bawaan) ---------- */
+.modal-konfirmasi h3 {
+  margin-bottom: 4px;
+}
+
+.btn-bahaya {
+  background-color: var(--merah);
+  color: #fff;
+  border: none;
+}
+
+.btn-bahaya:hover {
+  background-color: #a53326;
+}
+
+/* ---------- Overlay animasi sukses (habis checkout, dll) ---------- */
+.sukses-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 61, 44, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1300;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.sukses-overlay.tampil {
+  opacity: 1;
+}
+
+.sukses-box {
+  background-color: #fff;
+  border-radius: var(--radius-besar);
+  padding: 34px 28px 28px;
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.sukses-box h3 {
+  color: var(--hijau-tua);
+  font-size: 18px;
+  margin: 14px 0 6px;
+}
+
+.sukses-box p {
+  font-size: 13.5px;
+  color: var(--abu-teks);
+  margin-bottom: 18px;
+}
+
+.sukses-centang {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto;
+  display: block;
+}
+
+.sukses-lingkaran {
+  stroke: var(--hijau-muda);
+  stroke-width: 3;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: gambarLingkaran 0.5s ease forwards;
+}
+
+.sukses-tanda {
+  stroke: var(--hijau-muda);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  animation: gambarTanda 0.35s 0.45s ease forwards;
+}
+
+@keyframes gambarLingkaran {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes gambarTanda {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ---------- Animasi goyang untuk validasi input (mis. jumlah pesanan mentok stok) ---------- */
+@keyframes goyang {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.goyang {
+  animation: goyang 0.35s ease;
+  border-color: var(--merah) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
