@@ -46,7 +46,7 @@ if(isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — E-Kantin Sekolah</title>
     <link rel="icon" href="assets/img/logo-sekolah.png">
-    <link rel="stylesheet" href="assets/css/kantin-style.css">
+    <link rel="stylesheet" href="assets/css/login-register.css">
 </head>
 <body>
     <div class="auth-wrap">
@@ -122,6 +122,6 @@ if(isset($_POST['login'])) {
         <p class="switch-link">Belum punya akun? <a href="registrasi.php">Daftar Akun</a></p>
     </div>
 
-    <script src="assets/js/kantin-script.js"></script>
+    <script src="assets/js/login-register.js"></script>
 </body>
 </html>
