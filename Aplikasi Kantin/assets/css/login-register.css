@@ -1,323 +1,225 @@
-/* ===========================================================
-   E-Kantin Sekolah — auth pages (login & registrasi)
-   Tema: hijau lambang sekolah + emas akademik
-   =========================================================== */
+/* =========================================================
+   STYLE HALAMAN LOGIN & REGISTRASI - E-KANTIN SEKOLAH
+   Warna diambil dari logo sekolah (hijau tua + emas)
+   ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+/* Warna-warna yang dipakai berulang, biar gampang diganti */
 :root {
-  --green: #053a28;
-  --green-light: #0b5c3f;
-  --green-soft: #125e42;
-  --gold: #d8ae4c;
-  --gold-soft: #f0d48a;
-  --cream: #f7f7f5;
-  --paper-shadow: #e7e3d6;
-  --ink: #0b2a1f;
-  --ink-soft: #5c6b62;
-  --maroon: #b33f32;
-
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
-  --shadow-card: 0 20px 50px rgba(5, 58, 40, 0.35);
+  --hijau-tua: #053a28;
+  --hijau-muda: #0b5c3f;
+  --emas: #d8ae4c;
+  --krem: #f7f7f5;
+  --abu-teks: #5c6b62;
+  --merah: #b33f32;
 }
 
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
+/* Reset dasar biar tampilan konsisten di semua browser */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--hijau-tua);
   min-height: 100vh;
-  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  background: var(--green);
-  color: var(--cream);
+
+  /* menengahkan konten secara vertikal & horizontal */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(16px, 5vw, 40px);
-  position: relative;
-  overflow-x: hidden;
+  padding: 10px;
 }
 
-/* faint owl watermark, sits behind everything */
-body::before {
-  content: "";
-  position: fixed;
-  right: clamp(-160px, -10vw, -60px);
-  bottom: clamp(-160px, -10vw, -60px);
-  width: min(60vw, 560px);
-  height: min(60vw, 560px);
-  background: url('../img/logo-sekolah.png') no-repeat center / contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.auth-wrap {
-  width: 100%;
-  max-width: 420px;
-  position: relative;
-  z-index: 1;
-}
-
-/* ---------- brand header ---------- */
+/* ---------- Bagian logo & judul di atas kotak login ---------- */
 .brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
-  margin-bottom: clamp(18px, 4vw, 28px);
+  margin-bottom: 10px;
 }
 
 .brand img {
-  width: clamp(48px, 12vw, 64px);
-  height: clamp(48px, 12vw, 64px);
-  filter: brightness(0) invert(1);
+  width: 100px;
+  height: 100px;
 }
 
-.brand .eyebrow {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
+.brand .sub-judul {
+  color: var(--emas);
+  font-size: 12px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .brand h1 {
-  font-size: clamp(22px, 5vw, 28px);
-  font-weight: 700;
-  margin: 4px 0 0;
+  color: #ffffff;
+  font-size: 26px;
+  margin-top: 5px;
 }
 
-/* ---------- card ---------- */
+/* ---------- Kotak form (card) ---------- */
+.auth-wrap {
+  height: 900px;
+  width: 500px;
+}
+
 .auth-card {
-  background: var(--cream);
-  color: var(--ink);
-  border-radius: var(--radius-lg);
+  background-color: var(--krem);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* Tab "Masuk" dan "Daftar" di bagian atas card */
 .auth-tabs {
   display: flex;
-  border-bottom: 1px solid var(--paper-shadow);
 }
 
 .auth-tabs a {
   flex: 1;
   text-align: center;
-  padding: 14px 8px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 14px;
   text-decoration: none;
-  color: var(--ink-soft);
-  transition: background 0.15s ease, color 0.15s ease;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--abu-teks);
+  background-color: #eeeee9;
 }
 
 .auth-tabs a.active {
-  background: var(--gold);
-  color: var(--ink);
+  background-color: var(--emas);
+  color: var(--hijau-tua);
 }
 
 .auth-body {
-  padding: clamp(20px, 6vw, 30px);
+  padding: 25px;
 }
 
 .auth-body h2 {
-  margin: 0 0 4px;
+  font-size: 22px;
+  color: var(--hijau-tua);
+  margin-bottom: 10px;
+}
+
+.auth-body p {
   font-size: 18px;
+  color: var(--abu-teks);
+  margin-bottom: 23px;
 }
 
-.auth-body .sub {
-  margin: 0 0 20px;
-  font-size: 13px;
-  color: var(--ink-soft);
+/* ---------- Form & Input ---------- */
+.form-group {
+  margin-bottom: 10px;
 }
 
-/* ---------- form fields ---------- */
-form { display: flex; flex-direction: column; gap: 14px; }
-
-.field label {
+.form-group label {
   display: block;
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 600;
+  color: var(--abu-teks);
   margin-bottom: 6px;
-  color: var(--ink-soft);
 }
 
-.field-input {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--paper-shadow);
-  border-radius: var(--radius-sm);
-  padding: 0 12px;
-  transition: box-shadow 0.15s ease;
-}
-
-.field-input:focus-within {
-  box-shadow: 0 0 0 2px var(--gold);
-}
-
-.field-input svg {
-  flex-shrink: 0;
-  color: var(--ink-soft);
-}
-
-.field-input input,
-.field-input select {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  background: transparent;
-  outline: none;
-  padding: 13px 0;
-  font-size: 15px;
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 20px;
   font-family: inherit;
-  color: var(--ink);
 }
 
-/* visible keyboard focus for accessibility */
-input:focus-visible,
-select:focus-visible,
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
+/* Warna border saat input diklik/aktif */
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--emas);
 }
 
-.toggle-pass {
+/* Baris password + tombol lihat password */
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 70px; /* kasih ruang buat tombol "Lihat" */
+}
+
+.btn-lihat {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
-  padding: 6px;
+  font-size: 12px;
+  color: var(--hijau-muda);
+  font-weight: 600;
   cursor: pointer;
-  color: var(--ink-soft);
-  display: flex;
-  align-items: center;
 }
 
-/* ---------- role picker (cards instead of a bare dropdown) ---------- */
-.role-group {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+/* ---------- Pilihan role (Siswa/Penjual/Admin) ---------- */
+.role-pilihan {
+  display: flex;
+  gap: 15px;
 }
 
-.role-group input { position: absolute; opacity: 0; pointer-events: none; }
-
-.role-card {
+.role-pilihan label {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 12px 6px;
-  border-radius: var(--radius-sm);
-  background: var(--paper-shadow);
-  border: 2px solid transparent;
+  font-size: 19px;
+  font-weight: normal;
+  color: var(--hijau-tua);
   cursor: pointer;
-  text-align: center;
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-.role-card:hover { transform: translateY(-2px); }
-
-.role-card .emoji { font-size: 20px; line-height: 1; }
-.role-card .label { font-size: 12px; font-weight: 600; }
-
-.role-group input:checked + .role-card {
-  border-color: var(--gold);
-  background: var(--gold-soft);
-}
-
-/* ---------- buttons ---------- */
-.btn-primary {
-  margin-top: 4px;
+/* ---------- Tombol utama ---------- */
+.btn-submit {
+  width: 100%;
   padding: 14px;
+  margin-top: 10px;
+  
   border: none;
   border-radius: 999px;
-  background: var(--green);
-  color: var(--cream);
+  background-color: var(--hijau-tua);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
   font-family: inherit;
-  font-size: 15px;
-  font-weight: 700;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.btn-primary:hover { background: var(--green-light); }
-.btn-primary:active { transform: scale(0.98); }
-
-.btn-primary[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
+.btn-submit:hover {
+  background-color: var(--hijau-muda);
 }
 
-.btn-primary .spinner {
-  width: 15px;
-  height: 15px;
-  border: 2px solid rgba(247, 247, 245, 0.4);
-  border-top-color: var(--cream);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  display: none;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.form-note {
+/* Link "belum/sudah punya akun" di bawah card */
+.link-bawah {
   text-align: center;
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin-top: 4px;
+  color: #ffffff;
+  font-size: 18px;
+  margin-top: 20px;
 }
 
-.switch-link {
-  text-align: center;
-  font-size: 13px;
-  color: rgba(247, 247, 245, 0.7);
-  margin-top: 18px;
-}
-
-.switch-link a {
-  color: var(--gold-soft);
+.link-bawah a {
+  color: var(--emas);
   font-weight: 600;
   text-decoration: none;
 }
 
-.switch-link a:hover { text-decoration: underline; }
+/* ---------- Tampilan di layar HP (lebar di bawah 480px) ---------- */
+@media (max-width: 480px) {
+  .auth-body {
+    padding: 18px;
+  }
 
-/* ---------- error banner (populated by JS or PHP if needed) ---------- */
-.form-error {
-  background: rgba(179, 63, 50, 0.12);
-  border: 1px solid rgba(179, 63, 50, 0.35);
-  color: var(--maroon);
-  font-size: 12.5px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  display: none;
-}
-
-.form-error.show { display: block; }
-
-/* ---------- responsive tweaks ---------- */
-@media (max-width: 380px) {
-  .role-group { grid-template-columns: 1fr; }
-  .role-card { flex-direction: row; justify-content: flex-start; padding: 10px 12px; }
-}
-
-@media (min-width: 640px) {
-  .auth-wrap { max-width: 440px; }
-}
-
-/* respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .role-pilihan {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
