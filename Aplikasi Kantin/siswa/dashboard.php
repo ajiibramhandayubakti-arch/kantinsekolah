@@ -117,6 +117,49 @@ $total_item_keranjang = array_sum($_SESSION['keranjang']);
 
     <?php include 'navbar.php'; ?>
 
+    <!-- ============ HERO SECTION / SLIDER ============ -->
+    <section class="hero-slider">
+        <div class="hero-track-wrap">
+            <div class="hero-track" id="heroTrack">
+
+                <div class="hero-slide">
+                    <div class="hero-slide-teks">
+                        <span class="hero-slide-label">Promo Hari Ini</span>
+                        <h2>Diskon 10% untuk pembelian di atas Rp 20.000</h2>
+                        <p>Berlaku untuk semua stand kantin, khusus hari ini. Yuk buruan pesan sebelum kehabisan!</p>
+                        <a href="#daftar-menu" class="hero-slide-cta">Lihat Menu</a>
+                    </div>
+                    <div class="hero-slide-ikon"></div>
+                </div>
+
+                <div class="hero-slide warna-2">
+                    <div class="hero-slide-teks">
+                        <span class="hero-slide-label">Menu Baru</span>
+                        <h2>Cobain menu terbaru dari Kantin Bu Sari</h2>
+                        <p>Ada tambahan menu segar setiap minggunya. Jangan lupa cek stok sebelum kehabisan.</p>
+                        <a href="#daftar-menu" class="hero-slide-cta">Cek Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="hero-slide warna-3">
+                    <div class="hero-slide-teks">
+                        <span class="hero-slide-label">Info Kantin</span>
+                        <h2>Kantin buka setiap hari pukul 07.00 - 15.00</h2>
+                        <p>Pesan lebih awal supaya makanan favoritmu tidak keburu habis saat jam istirahat.</p>
+                        <a href="#daftar-menu" class="hero-slide-cta">Pesan Sekarang</a>
+                    </div>
+                    <div class="hero-slide-ikon"></div>
+                </div>
+
+            </div>
+
+            <button type="button" class="hero-nav hero-prev" onclick="heroGeser(-1)">‹</button>
+            <button type="button" class="hero-nav hero-next" onclick="heroGeser(1)">›</button>
+        </div>
+
+        <div class="hero-dots" id="heroDots"></div>
+    </section>
+
     <div class="container">
 
         <h2 class="halaman-judul">Selamat Datang, <?php echo htmlspecialchars($_SESSION['nama_user']); ?>! </h2>
@@ -166,7 +209,7 @@ $total_item_keranjang = array_sum($_SESSION['keranjang']);
         </div>
 
         <!-- ============ DAFTAR MENU (HASIL FILTER) ============ -->
-        <div class="kotak">
+        <div class="kotak" id="daftar-menu">
             <h3> Daftar Menu Makanan & Minuman</h3>
 
             <?php if (mysqli_num_rows($query_menu) > 0): ?>
@@ -238,6 +281,53 @@ $total_item_keranjang = array_sum($_SESSION['keranjang']);
                 goyangkanElemen(input);
             }
         }
+
+        // ============ HERO SLIDER ============
+        (function () {
+            var track     = document.getElementById('heroTrack');
+            var dotsWrap  = document.getElementById('heroDots');
+            var slides    = track.children;
+            var totalSlide = slides.length;
+            var indexAktif = 0;
+            var timerAuto;
+
+            // buat tombol dot sesuai jumlah slide
+            for (var i = 0; i < totalSlide; i++) {
+                var dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'hero-dot' + (i === 0 ? ' aktif' : '');
+                dot.setAttribute('aria-label', 'Ke slide ' + (i + 1));
+                dot.addEventListener('click', (function (idx) {
+                    return function () { heroKe(idx); };
+                })(i));
+                dotsWrap.appendChild(dot);
+            }
+
+            function heroKe(idx) {
+                indexAktif = (idx + totalSlide) % totalSlide;
+                track.style.transform = 'translateX(-' + (indexAktif * 100) + '%)';
+
+                var semuaDot = dotsWrap.querySelectorAll('.hero-dot');
+                semuaDot.forEach(function (d, i) {
+                    d.classList.toggle('aktif', i === indexAktif);
+                });
+
+                resetAutoplay();
+            }
+
+            window.heroGeser = function (arah) {
+                heroKe(indexAktif + arah);
+            };
+
+            function resetAutoplay() {
+                clearInterval(timerAuto);
+                timerAuto = setInterval(function () {
+                    heroKe(indexAktif + 1);
+                }, 6000);
+            }
+
+            resetAutoplay();
+        })();
     </script>
 </body>
 </html>
