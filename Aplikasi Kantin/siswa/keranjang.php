@@ -1,7 +1,5 @@
 <?php
-/* =========================================================
-   1. SETUP & PROTEKSI AKSES
-   ========================================================= */
+/*  1. SETUP & PROTEKSI AKSES */
 session_start();
 include '../config/koneksi.php';
 
@@ -11,9 +9,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'siswa') {
 }
 
 
-/* =========================================================
-   2. AKSI: UBAH ISI KERANJANG (GET: tambah/kurang/hapus/kosongkan)
-   ========================================================= */
+/* 2. AKSI: UBAH ISI KERANJANG (GET: tambah/kurang/hapus/kosongkan) */
 
 // tambah jumlah salah satu item di keranjang (tidak boleh melebihi stok)
 if (isset($_GET['tambah_qty'])) {
@@ -59,10 +55,8 @@ if (isset($_GET['kosongkan'])) {
     exit;
 }
 
-/* =========================================================
-   3. AKSI: PROSES CHECKOUT (POST)
-   Hanya memproses item yang dicentang siswa di form keranjang
-   ========================================================= */
+/* 3. AKSI: PROSES CHECKOUT (POST)
+   Hanya memproses item yang dicentang siswa di form keranjang */
 if (isset($_POST['checkout'])) {
 
     if (empty($_SESSION['keranjang'])) {
@@ -111,8 +105,9 @@ if (isset($_POST['checkout'])) {
         );
     }
 
-    // 1. simpan transaksi ke tabel 'orders' dulu (nomor_antrean diisi sementara, diupdate setelah dapat id_order)
-    $query_order = "INSERT INTO orders (id_user, total_harga, nomor_antrean, status_pesanan) VALUES ('$id_user', '$total_harga', '', 'diproses')";
+    // 1. simpan transaksi ke tabel 'order' dulu (nomor_antrean diisi sementara, diupdate setelah dapat id_order)
+    $query_order = "INSERT INTO orders (id_user, total_harga, nomor_antrean, status_pesanan, metode_pembayaran) 
+        VALUES ('$id_user', '$total_harga', '', 'diproses', '$metode_bayar')";
 
     if (mysqli_query($conn, $query_order)) {
         $id_order = mysqli_insert_id($conn);
@@ -138,9 +133,7 @@ if (isset($_POST['checkout'])) {
     }
 }
 
-/* =========================================================
-   4. AMBIL DATA UNTUK TAMPILAN
-   ========================================================= */
+/* 4. AMBIL DATA UNTUK TAMPILAN */
 $baris_keranjang = array();
 if (!empty($_SESSION['keranjang'])) {
     foreach ($_SESSION['keranjang'] as $id_menu => $jumlah) {
@@ -168,7 +161,7 @@ if (!empty($_SESSION['keranjang'])) {
 
     <div class="container">
 
-        <h2 class="halaman-judul">🛒 Keranjang Belanja</h2>
+        <h2 class="halaman-judul"> Keranjang Belanja</h2>
         <p class="halaman-subjudul">Centang pesanan yang mau dibayar, sisanya boleh disimpan dulu di keranjang.</p>
 
         <div class="kotak">
@@ -193,13 +186,13 @@ if (!empty($_SESSION['keranjang'])) {
                                 <tr>
                                     <td>
                                         <input type="checkbox"
-                                               class="cek-item"
-                                               name="item_dipilih[]"
-                                               value="<?php echo $id_menu; ?>"
-                                               data-subtotal="<?php echo $data['subtotal']; ?>"
-                                               form="form-checkout"
-                                               checked
-                                               onchange="hitungTotal()">
+                                            class="cek-item"
+                                            name="item_dipilih[]"
+                                            value="<?php echo $id_menu; ?>"
+                                            data-subtotal="<?php echo $data['subtotal']; ?>"
+                                            form="form-checkout"
+                                            checked
+                                            onchange="hitungTotal()">
                                     </td>
                                     <td><?php echo $no++; ?></td>
                                     <td>
@@ -304,7 +297,7 @@ if (!empty($_SESSION['keranjang'])) {
                         <p>Support: DANA, GoPay, OVO, ShopeePay, LinkAja, dan Mobile Banking</p>
 
                         <!-- ganti src dengan link/path gambar QRIS kantin
-                         <img src="" alt="QRIS Kantin"> -->
+                        <img src="" alt="QRIS Kantin"> -->
 
                         <p>
                             Scan kode QRIS di atas sesuai nominal
@@ -317,7 +310,7 @@ if (!empty($_SESSION['keranjang'])) {
                         <button type="submit" form="form-checkout" name="checkout" class="btn btn-hijau"
                                 data-konfirmasi="Apakah Anda sudah melakukan pembayaran sesuai nominal di atas?"
                                 data-judul-konfirmasi="Konfirmasi Pembayaran">
-                            ✅ Konfirmasi & Pesan Sekarang
+                                Konfirmasi & Pesan Sekarang
                         </button>
                         <button type="button" class="btn" onclick="tutupModalBayar()">Batal</button>
                     </div>
