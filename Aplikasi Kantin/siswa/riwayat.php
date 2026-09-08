@@ -1,7 +1,5 @@
 <?php
-/* =========================================================
-   1. SETUP & PROTEKSI AKSES
-   ========================================================= */
+/* 1. SETUP & PROTEKSI AKSES */
 session_start();
 include '../config/koneksi.php';
 
@@ -13,9 +11,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'siswa') {
 $id_user = $_SESSION['id_user'];
 
 
-/* =========================================================
-   2. AMBIL FILTER STATUS DARI URL
-   ========================================================= */
+/* 2. AMBIL FILTER STATUS DARI URL */
 $status_dipilih = isset($_GET['status']) ? $_GET['status'] : 'semua';
 $status_valid   = array('semua', 'diproses', 'selesai', 'dibatalkan');
 
@@ -24,9 +20,7 @@ if (!in_array($status_dipilih, $status_valid)) {
 }
 
 
-/* =========================================================
-   3. QUERY DATA PESANAN (SESUAI FILTER STATUS)
-   ========================================================= */
+/* 3. QUERY DATA PESANAN (SESUAI FILTER STATUS) */
 $sql_order = "SELECT * FROM orders WHERE id_user = '$id_user'";
 
 if ($status_dipilih !== 'semua') {
@@ -50,7 +44,7 @@ $query_order = mysqli_query($conn, $sql_order);
 
     <div class="container">
 
-        <h2 class="halaman-judul">📋 Riwayat Pesanan Saya</h2>
+        <h2 class="halaman-judul"> Riwayat Pesanan Saya</h2>
         <p class="halaman-subjudul">Pesanan yang sudah selesai bisa dicetak jadi bukti pembayaran.</p>
 
         <!-- ============ TAB FILTER STATUS ============ -->
