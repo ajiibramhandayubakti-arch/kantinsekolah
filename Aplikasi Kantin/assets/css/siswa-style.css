@@ -1,11 +1,3 @@
-/* =========================================================
-   STYLE DASHBOARD SISWA - E-KANTIN SEKOLAH
-   Dipakai bareng di: dashboard.php, keranjang.php, riwayat.php
-   Versi disesuaikan dengan tema referensi (rounded card, shadow lembut)
-   ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
 :root {
   --hijau-tua: #0b3d2c;
   --hijau-muda: #0f7a4f;
@@ -20,6 +12,14 @@
   --radius-sedang: 14px;
   --shadow-lembut: 0 6px 20px rgba(11, 61, 44, 0.07);
   --shadow-lembut-hover: 0 14px 28px rgba(11, 61, 44, 0.14);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 * {
@@ -39,10 +39,10 @@ a {
   text-decoration: none;
 }
 
-/* ---------- Navbar (dipakai lewat include navbar.php) ---------- */
+/* navbar */
 .navbar {
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* kiri - tengah - kanan */
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 12px;
   background-color: var(--hijau-tua);
@@ -69,11 +69,10 @@ a {
 .navbar-brand span {
   color: #fff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 26px;
   letter-spacing: 0.3px;
 }
 
-/* menu navbar diposisikan di tengah pakai grid kolom "auto" di atas */
 .navbar-menu {
   display: flex;
   gap: 4px;
@@ -88,7 +87,7 @@ a {
   color: rgba(255, 255, 255, 0.85);
   padding: 9px 18px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   white-space: nowrap;
   transition: background-color 0.15s ease, color 0.15s ease;
@@ -99,7 +98,6 @@ a {
   color: #fff;
 }
 
-/* menu yang lagi aktif dikasih warna emas biar jelas siswa ada di halaman mana */
 .navbar-menu a.aktif {
   background-color: var(--emas);
   color: var(--hijau-tua);
@@ -127,8 +125,10 @@ a {
 
 .navbar-nama {
   color: #fff;
-  font-size: 13px;
+  font-size: 18px;
   white-space: nowrap;
+  font-style: inherit;
+  
 }
 
 .navbar-logout {
@@ -145,7 +145,6 @@ a {
   background-color: var(--merah);
 }
 
-/* navbar ditumpuk ke bawah kalau layar sempit, biar tidak berdesakan */
 @media (max-width: 700px) {
   .navbar {
     grid-template-columns: 1fr;
@@ -160,7 +159,352 @@ a {
   }
 }
 
-/* ---------- Judul halaman di dalam konten ---------- */
+/* ============ SPLASH SCREEN (INTRO) ============ */
+body.splash-aktif {
+  overflow: hidden;
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: linear-gradient(135deg, #0b3d2c 0%, #0e5238 100%);
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.splash-screen.splash-selesai {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* blob dekoratif yang melayang pelan di background, kasih kesan "hidup" */
+.splash-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.35;
+}
+
+.splash-blob-1 {
+  width: 320px;
+  height: 320px;
+  background-color: var(--hijau-terang);
+  top: -80px;
+  left: -60px;
+  animation: splashMengambang 7s ease-in-out infinite;
+}
+
+.splash-blob-2 {
+  width: 260px;
+  height: 260px;
+  background-color: var(--emas);
+  bottom: -70px;
+  right: -50px;
+  animation: splashMengambang 9s ease-in-out infinite reverse;
+}
+
+.splash-isi {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.splash-logo-wrap {
+  position: relative;
+  width: 102px;
+  height: 102px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* cincin glow yang berdenyut di belakang logo */
+.splash-logo-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(216, 174, 76, 0.55);
+  animation: splashRingBerdenyut 2s ease-out infinite;
+}
+
+.splash-logo-ring.jeda {
+  animation-delay: 0.5s;
+}
+
+.splash-logo {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  background-color: #fff;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  animation: splashLogoMuncul 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.splash-judul {
+  margin-top: 22px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  animation: splashTeksMuncul 0.6s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.splash-tagline {
+  margin-top: 6px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  animation: splashTeksMuncul 0.6s 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* progress bar yang benar-benar mengisi, lebarnya dikontrol lewat JS */
+.splash-progress-wrap {
+  width: 170px;
+  height: 8px;
+  margin: 30px auto 0;
+  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+  animation: splashTeksMuncul 0.6s 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.splash-progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, var(--emas), #f3d98a);
+  transition: width 1s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes splashLogoMuncul {
+  from { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes splashTeksMuncul {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splashRingBerdenyut {
+  0% { transform: scale(0.85); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes splashMengambang {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(24px, 18px); }
+}
+
+/* splash sengaja dikecualikan dari aturan prefers-reduced-motion di bawah,
+   karena animasinya cuma tampil sekali (bukan animasi berulang yang mengganggu)
+   dan justru jadi bagian penting dari kesan pertama aplikasi */
+
+/* ============ HERO SECTION / SLIDER ============ */
+.hero-slider {
+  position: relative;
+  max-width: 1280px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.hero-track-wrap {
+  position: relative;
+  border-radius: var(--radius-besar);
+  overflow: hidden;
+  box-shadow: var(--shadow-lembut);
+}
+
+.hero-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.hero-slide {
+  flex: 0 0 100%;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  padding: 36px 44px;
+  background-image: linear-gradient(135deg, #0b3d2c 0%, #0e5238 100%);
+  color: #fff;
+  gap: 24px;
+}
+
+.hero-slide.warna-2 {
+  background-image: linear-gradient(135deg, #0f7a4f 0%, #14a86a 100%);
+}
+
+.hero-slide.warna-3 {
+  background-image: linear-gradient(135deg, #8a6d1f 0%, #d8ae4c 100%);
+}
+
+.hero-slide-teks {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-slide-label {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.16);
+  color: var(--emas);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.hero-slide h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.hero-slide p {
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 18px;
+  max-width: 480px;
+}
+
+.hero-slide-cta {
+  display: inline-block;
+  background-color: var(--emas);
+  color: var(--hijau-tua);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 11px 24px;
+  border-radius: 999px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hero-slide-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.hero-slide-ikon {
+  flex-shrink: 0;
+  font-size: 64px;
+  opacity: 0.9;
+}
+
+/* Gambar menu pada slider berbentuk setengah oval */
+.hero-slide-gambar {
+  flex: 0 0 330px;
+  height: 210px;
+  margin-right: -44px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 50% 0 0 50%;
+  box-shadow: -10px 0 28px rgba(0, 0, 0, 0.12);
+}
+
+.hero-slide-gambar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50% 0 0 50%;
+  transition: transform 0.35s ease;
+}
+
+.hero-slide:hover .hero-slide-gambar img {
+  transform: scale(1.05);
+}
+
+.hero-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  z-index: 2;
+}
+
+.hero-nav:hover {
+  background-color: rgba(255, 255, 255, 0.38);
+}
+
+.hero-prev { left: 14px; }
+.hero-next { right: 14px; }
+
+.hero-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: #d7ded9;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.15s ease, width 0.15s ease;
+}
+
+.hero-dot.aktif {
+  background-color: var(--hijau-tua);
+  width: 22px;
+  border-radius: 999px;
+}
+
+@media (max-width: 700px) {
+  .hero-slide {
+    padding: 26px 24px;
+    min-height: 180px;
+  }
+
+  .hero-slide h2 {
+    font-size: 19px;
+  }
+
+  .hero-slide-ikon {
+    font-size: 42px;
+  }
+
+  .hero-slide-gambar {
+    flex: 0 0 180px;
+    height: 150px;
+    margin-right: -24px;
+    border-radius: 50% 0 0 50%;
+  }
+
+  .hero-slide-gambar img {
+    border-radius: 50% 0 0 50%;
+  }
+
+  .hero-nav {
+    display: none;
+  }
+}
+
 .halaman-judul {
   color: var(--hijau-tua);
   font-size: 21px;
@@ -174,9 +518,8 @@ a {
   margin-bottom: 22px;
 }
 
-/* ---------- Isi halaman ---------- */
 .container {
-  max-width: 1080px;
+  max-width: 1280px;
   margin: 25px auto;
   padding: 0 20px;
 }
@@ -197,7 +540,6 @@ a {
   margin-bottom: 14px;
 }
 
-/* ---------- Form pencarian ---------- */
 .form-cari {
   display: flex;
   gap: 8px;
@@ -239,7 +581,6 @@ a {
   background-color: var(--hijau-muda);
 }
 
-/* ---------- Chip pilihan kantin ---------- */
 .kantin-chip {
   display: inline-block;
   padding: 9px 16px;
@@ -260,14 +601,12 @@ a {
   transform: translateY(-2px);
 }
 
-/* kantin yang lagi difilter/dipilih dikasih tanda jelas */
 .kantin-chip.aktif {
   background-color: var(--hijau-tua);
   border-color: var(--hijau-tua);
   color: #fff;
 }
 
-/* ---------- Baris "Urutkan:" di kotak pencarian ---------- */
 .urutan-bar {
   display: flex;
   align-items: center;
@@ -283,7 +622,6 @@ a {
   margin-right: 2px;
 }
 
-/* ---------- Tab filter (dipakai di riwayat.php status, & urutan dashboard) ---------- */
 .filter-tab-bar {
   display: flex;
   gap: 8px;
@@ -314,7 +652,6 @@ a {
   color: #fff;
 }
 
-/* ---------- Tabel ---------- */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -339,12 +676,10 @@ tbody tr:hover {
   background-color: #f7faf8;
 }
 
-/* biar tabel bisa digeser saat layar sempit, tanpa merusak layout */
 .tabel-geser {
   overflow-x: auto;
 }
 
-/* ---------- Grid kartu menu (tampilan seperti etalase kantin) ---------- */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -357,7 +692,6 @@ tbody tr:hover {
   border-radius: var(--radius-besar);
   overflow: hidden;
   box-shadow: var(--shadow-lembut);
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   animation: muncul 0.4s ease both;
 }
@@ -376,17 +710,10 @@ tbody tr:hover {
 .menu-card:nth-child(n+7) { animation-delay: 0.35s; }
 
 @keyframes muncul {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* foto menu */
 .menu-img {
   width: 100%;
   height: 150px;
@@ -458,7 +785,6 @@ tbody tr:hover {
   gap: 10px;
 }
 
-/* ---------- Foto kecil (dipakai di tabel keranjang & daftar riwayat) ---------- */
 .menu-thumb-kecil {
   width: 44px;
   height: 44px;
@@ -492,7 +818,6 @@ tbody tr:hover {
   font-size: 13px;
 }
 
-/* ---------- Kontrol jumlah pesan (tombol - dan +) ---------- */
 .qty-control {
   display: inline-flex;
   align-items: center;
@@ -543,7 +868,6 @@ tbody tr:hover {
   font-weight: 600;
 }
 
-/* ---------- Tombol umum ---------- */
 .btn {
   display: inline-block;
   padding: 9px 18px;
@@ -583,7 +907,6 @@ tbody tr:hover {
   font-weight: 600;
 }
 
-/* ---------- Badge status pesanan ---------- */
 .badge {
   display: inline-block;
   padding: 5px 12px;
@@ -608,16 +931,14 @@ tbody tr:hover {
   color: var(--merah);
 }
 
-/* ---------- Nomor antrean besar di riwayat ---------- */
 .nomor-antrean {
   font-size: 18px;
   font-weight: 700;
   color: var(--hijau-muda);
 }
 
-/* ---------- Kotak QRIS di halaman keranjang ---------- */
 .kotak-qris {
-  max-width: 300px;
+  max-width: 400px;
   background-color: var(--krem);
   border: 1px solid var(--border-halus);
   border-radius: var(--radius-sedang);
@@ -666,7 +987,6 @@ tbody tr:hover {
   font-weight: 700;
 }
 
-/* tombol nonaktif saat belum ada item dicentang */
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -677,14 +997,13 @@ tbody tr:hover {
   background-color: var(--hijau-tua);
 }
 
-/* checkbox di kolom pertama tabel keranjang */
-th:first-child,
-td:first-child {
+/* kolom checkbox di tabel keranjang, di-scope biar tidak kena tabel lain (mis. struk) */
+.tabel-keranjang th:first-child,
+.tabel-keranjang td:first-child {
   width: 40px;
   text-align: center;
 }
 
-/* ---------- Modal popup pilihan metode pembayaran ---------- */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -735,7 +1054,6 @@ td:first-child {
   color: var(--merah);
 }
 
-/* ---------- Checkbox pilih item di keranjang ---------- */
 input.cek-item,
 #pilih-semua {
   width: 18px;
@@ -744,7 +1062,6 @@ input.cek-item,
   accent-color: var(--hijau-tua);
 }
 
-/* ---------- Kartu pilihan metode pembayaran ---------- */
 .metode-pilihan {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -782,7 +1099,6 @@ input.cek-item,
   background-color: #eefaf3;
 }
 
-/* ---------- Struk / Bukti Pembayaran ---------- */
 .struk-area {
   max-width: 380px;
   margin: 0 auto;
@@ -825,17 +1141,44 @@ input.cek-item,
   padding: 3px 0;
   font-size: 13px;
   border: none;
+  vertical-align: top;
+}
+
+.struk-info {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.struk-info td:first-child {
+  width: 110px;
+  white-space: nowrap;
+  color: var(--abu-teks);
+}
+
+.struk-item {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.struk-item td:first-child {
+  width: 70%;
+  text-align: left;
 }
 
 .struk-item td:last-child,
 .struk-total td:last-child {
   text-align: right;
+  white-space: nowrap;
 }
 
 .struk-total {
   width: 100%;
   font-size: 15px;
   font-weight: 700;
+}
+
+.struk-total td:first-child {
+  white-space: nowrap;
 }
 
 .struk-status {
@@ -861,7 +1204,6 @@ input.cek-item,
   margin-top: 20px;
 }
 
-/* saat halaman di-print / disimpan jadi PDF, sembunyikan bagian yang tidak perlu */
 @media print {
   .navbar,
   .struk-aksi {
@@ -878,7 +1220,6 @@ input.cek-item,
   }
 }
 
-/* ---------- Tampilan HP ---------- */
 @media (max-width: 600px) {
   .topbar-menu a {
     margin-bottom: 6px;
@@ -900,7 +1241,6 @@ input.cek-item,
   }
 }
 
-/* ---------- Toast notifikasi (pengganti alert bawaan) ---------- */
 #toast-container {
   position: fixed;
   top: 18px;
@@ -943,7 +1283,6 @@ input.cek-item,
 .toast-info { border-left-color: var(--emas); }
 .toast-ikon { font-size: 16px; }
 
-/* ---------- Modal konfirmasi custom (pengganti confirm bawaan) ---------- */
 .modal-konfirmasi h3 {
   margin-bottom: 4px;
 }
@@ -958,7 +1297,6 @@ input.cek-item,
   background-color: #a53326;
 }
 
-/* ---------- Overlay animasi sukses (habis checkout, dll) ---------- */
 .sukses-overlay {
   position: fixed;
   inset: 0;
@@ -1031,7 +1369,6 @@ input.cek-item,
   to { stroke-dashoffset: 0; }
 }
 
-/* ---------- Animasi goyang untuk validasi input (mis. jumlah pesanan mentok stok) ---------- */
 @keyframes goyang {
   0%, 100% { transform: translateX(0); }
   20% { transform: translateX(-4px); }
@@ -1044,8 +1381,9 @@ input.cek-item,
   animation: goyang 0.35s ease;
   border-color: var(--merah) !important;
 }
+
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *:not(.splash-screen):not(.splash-screen *) {
     animation: none !important;
     transition: none !important;
   }
